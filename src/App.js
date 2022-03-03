@@ -1,11 +1,20 @@
-import "./App.css";
-import { MainPage } from "./pages";
+import './App.css';
+import { MainPage } from './pages';
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <div className="App">
-      <MainPage></MainPage>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <MainPage />
+    </QueryClientProvider>
   );
 }
 

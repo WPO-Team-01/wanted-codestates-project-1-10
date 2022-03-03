@@ -1,7 +1,7 @@
-import React from "react";
-import classNames from "classnames";
-import styles from "./MainPage.module.scss";
-import { CustomInput } from "../../components";
+import React, { useState } from 'react';
+import classNames from 'classnames';
+import styles from './MainPage.module.scss';
+import { CustomInput } from '../../components';
 
 const { container, title, inputBox } = styles;
 
@@ -14,7 +14,7 @@ const MainPage = () => {
         온라인으로 참여하기
       </h1>
       <div className={classNames(inputBox)}>
-        <CustomInput placeholder="질환명을 입력해 주세요."></CustomInput>
+        <CustomInput placeholder='질환명을 입력해 주세요.'></CustomInput>
       </div>
     </div>
   );
