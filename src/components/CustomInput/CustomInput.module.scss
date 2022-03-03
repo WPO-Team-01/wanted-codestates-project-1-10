@@ -1,0 +1,42 @@
+.inputBox {
+  .inputContent {
+    height: fit-content;
+    border-radius: 4rem;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: auto 6rem;
+
+    .inputText {
+      display: grid;
+      grid-template-columns: 6rem auto;
+      align-items: center;
+      background: #fff;
+
+      > div {
+        cursor: default;
+      }
+
+      input {
+        width: 100%;
+        min-height: 4rem;
+        padding: 0.2rem;
+        border: none;
+        outline: none;
+        font-size: 1.2rem;
+      }
+    }
+
+    .buttonBox {
+      button {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: #007be9;
+        color: #fff;
+        font-weight: 700;
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+    }
+  }
+}
