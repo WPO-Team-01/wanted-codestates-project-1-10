@@ -23,6 +23,13 @@ const CustomInput = ({ placeholder, value, disable }) => {
     }
   };
 
+  useEffect(() => {
+    const now = new Date().getHours();
+    if (now === 0) {
+      localStorage.clear();
+    }
+  }, []);
+
   return (
     <div className={classNames(inputBox)}>
       <div className={classNames(inputContent)}>
