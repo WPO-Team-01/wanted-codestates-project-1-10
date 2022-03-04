@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import styles from "./CustomInput.module.scss";
+import { api } from "../../axios";
+import { useSelector, useDispatch } from "react-redux";
+import { searchResultRequest } from "../../redux/resultSlice";
 
 const data = [
   { name: "Klatskin's tumor", id: 125 },
@@ -34,6 +37,16 @@ const CustomInput = ({
   const [list, setList] = useState([]);
   const [keyword, setKeyword] = useState();
   const [open, setOpen] = useState();
+  const dispatch = useDispatch();
+  const resultLists = useSelector((state) => state.resultSlice);
+
+  const handleInputChange = (e) => {
+    const searchInput = e.target.value;
+
+    if (searchInput) {
+      dispatch(searchResultRequest(searchInput));
+    }
+  };
 
   const onChange = (e) => {
     setKeyword(e.target.value);
@@ -119,7 +132,7 @@ const CustomInput = ({
           <input
             type="text"
             placeholder={placeholder}
-            onChange={onChange}
+            onChange={handleInputChange}
             value={value}
             disabled={disable}
             ref={inputRef}

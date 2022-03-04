@@ -1,11 +1,36 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import classNames from "classnames";
+import { debounce } from "lodash";
 import styles from "./MainPage.module.scss";
-import CustomInput from "../../components/CustomInput/CustomInput";
+import { CustomInput } from "../../components";
+import { searchResultRequest } from "../../redux/resultSlice";
 
 const { container, title, inputBox } = styles;
 
 const MainPage = () => {
+  const [value, setValue] = useState("");
+
+  // eslint-disable-next-line
+  const handleChange = useCallback(
+    debounce((e) => {
+      setValue(e.target.value);
+    }, 400),
+    [value]
+  );
+
+  useEffect(() => {
+    // 만료시간 지난 캐시 삭제
+    for (let elem in localStorage) {
+      const localStorageElem = JSON.parse(localStorage.getItem(elem));
+      if (
+        localStorageElem?.expireTime &&
+        localStorageElem?.expireTime <= Date.now()
+      ) {
+        localStorage.removeItem(elem);
+      }
+    }
+  }, []);
+
   return (
     <div className={classNames(container)}>
       <h1 className={classNames(title)}>
@@ -14,7 +39,10 @@ const MainPage = () => {
         온라인으로 참여하기
       </h1>
       <div className={classNames(inputBox)}>
-        <CustomInput placeholder="질환명을 입력해 주세요."></CustomInput>
+        <CustomInput
+          placeholder="질환명을 입력해 주세요."
+          onChange={handleChange}
+        ></CustomInput>
       </div>
     </div>
   );
