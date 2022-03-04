@@ -18,7 +18,7 @@ export const searchResultRequest = createAsyncThunk(
       };
       localStorage.setItem(searchInput, JSON.stringify(object));
 
-      return object;
+      return JSON.stringify(object);
     }
   },
 );
