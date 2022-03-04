@@ -4,7 +4,7 @@ import styles from "./CustomInput.module.scss";
 
 const { inputBox, inputContent, inputText, buttonBox } = styles;
 
-const CustomInput = ({ placeholder, onChange, value, disable }) => {
+const CustomInput = ({ placeholder, onChange, disable, onClick }) => {
   return (
     <div className={classNames(inputBox)}>
       <div className={classNames(inputContent)}>
@@ -14,12 +14,11 @@ const CustomInput = ({ placeholder, onChange, value, disable }) => {
             type="text"
             placeholder={placeholder}
             onChange={onChange}
-            value={value}
             disabled={disable}
           />
         </div>
         <div className={classNames(buttonBox)}>
-          <button>검색</button>
+          <button onClick={onClick}>검색</button>
         </div>
       </div>
     </div>
