@@ -1,24 +1,10 @@
 import React from "react";
 import classNames from "classnames";
 import styles from "./CustomInput.module.scss";
-import { api } from "../../axios";
-import { useSelector, useDispatch } from "react-redux";
-import { searchResultRequest } from "../../redux/resultSlice";
 
 const { inputBox, inputContent, inputText, buttonBox } = styles;
 
-const CustomInput = ({ placeholder, value, disable }) => {
-  const dispatch = useDispatch();
-  const resultLists = useSelector((state) => state.resultSlice);
-
-  const handleInputChange = (e) => {
-    const searchInput = e.target.value;
-
-    if (searchInput) {
-      dispatch(searchResultRequest(searchInput));
-    }
-  };
-
+const CustomInput = ({ placeholder, value, disable, onChange }) => {
   return (
     <div className={classNames(inputBox)}>
       <div className={classNames(inputContent)}>
@@ -27,7 +13,7 @@ const CustomInput = ({ placeholder, value, disable }) => {
           <input
             type="text"
             placeholder={placeholder}
-            onChange={handleInputChange}
+            onChange={onChange}
             value={value}
             disabled={disable}
           />
