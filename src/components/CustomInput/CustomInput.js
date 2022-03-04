@@ -1,16 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import styles from "./CustomInput.module.scss";
-
-const data = [
-  { name: "Klatskin's tumor", id: 125 },
-  { name: "간세포암", id: 133 },
-  { name: "갑상선암종", id: 187 },
-  { name: "고환암", id: 335 },
-  { name: "뼈암", id: 375 },
-  { name: "구강암", id: 445 },
-  { name: "치은암", id: 449 },
-];
+import { useSelector } from "react-redux";
 
 const {
   inputBox,
@@ -34,22 +25,14 @@ const CustomInput = ({
   const [list, setList] = useState([]);
   const [keyword, setKeyword] = useState();
   const [open, setOpen] = useState();
-  const dispatch = useDispatch();
-  const resultLists = useSelector((state) => state.resultSlice);
-
-  const handleInputChange = (e) => {
-    const searchInput = e.target.value;
-
-    if (searchInput) {
-      dispatch(searchResultRequest(searchInput));
-    }
-  };
 
   const onChange = (e) => {
     setKeyword(e.target.value);
     setOpen(true);
   };
 
+  const resultLists = useSelector((state) => state.resultSlice);
+  console.log(resultLists);
   const ARROW_DOWN = "ArrowDown";
   const ARROW_UP = "ArrowUp";
   const ESCAPE = "Escape";
@@ -115,12 +98,11 @@ const CustomInput = ({
       setOpen(false);
       return;
     }
-    const newList = data.filter(
+    const newList = resultLists.filter(
       (item) => item.name.toLowerCase().indexOf(keyword.toLowerCase()) >= 0
     );
     setList(newList);
   }, [keyword]);
-
 
   return (
     <div className={classNames(inputBox)}>
