@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import classNames from "classnames";
 import styles from "./CustomInput.module.scss";
-import { api } from "../../axios";
-import { useSelector, useDispatch } from "react-redux";
-import { searchResultRequest } from "../../redux/resultSlice";
 
 const data = [
   { name: "Klatskin's tumor", id: 125 },
@@ -124,6 +121,7 @@ const CustomInput = ({
     setList(newList);
   }, [keyword]);
 
+
   return (
     <div className={classNames(inputBox)}>
       <div className={classNames(inputContent)}>
@@ -132,7 +130,7 @@ const CustomInput = ({
           <input
             type="text"
             placeholder={placeholder}
-            onChange={handleInputChange}
+            onChange={onChange}
             value={value}
             disabled={disable}
             ref={inputRef}
