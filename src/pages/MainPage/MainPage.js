@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 import styles from "./MainPage.module.scss";
-import { CustomInput } from "../../components";
+import CustomInput from "../../components/CustomInput/CustomInput";
 
 const { container, title, inputBox } = styles;
 
