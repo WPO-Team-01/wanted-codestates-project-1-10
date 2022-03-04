@@ -1,38 +1,35 @@
 import React, { useCallback, useEffect, useState } from "react";
 import classNames from "classnames";
+import { debounce } from "lodash";
 import styles from "./MainPage.module.scss";
 import { CustomInput } from "../../components";
-import { debounce, set } from "lodash";
-import { useGetContentsQuery } from "../../store/query/ContentsApi";
-import { useDispatch } from "react-redux";
+import { searchResultRequest } from "../../redux/resultSlice";
 
 const { container, title, inputBox } = styles;
 
 const MainPage = () => {
   const [value, setValue] = useState("");
-  const [skip, setSkip] = useState(true);
-  const { data } = useGetContentsQuery(value, { skip });
-
-  useEffect(() => {
-    if (!value) {
-      setSkip(true);
-    }
-  }, [value]);
 
   // eslint-disable-next-line
   const handleChange = useCallback(
     debounce((e) => {
       setValue(e.target.value);
-      setSkip(false);
     }, 400),
     [value],
   );
 
-  const handleClickSearch = () => {
-    if (!value) {
-      alert("검색어를 입력해 주세요!");
+  useEffect(() => {
+    // 만료시간 지난 캐시 삭제
+    for (let elem in localStorage) {
+      const localStorageElem = JSON.parse(localStorage.getItem(elem));
+      if (
+        localStorageElem?.expireTime &&
+        localStorageElem?.expireTime <= Date.now()
+      ) {
+        localStorage.removeItem(elem);
+      }
     }
-  };
+  }, []);
 
   return (
     <div className={classNames(container)}>
@@ -45,7 +42,6 @@ const MainPage = () => {
         <CustomInput
           placeholder="질환명을 입력해 주세요."
           onChange={handleChange}
-          onClick={handleClickSearch}
         ></CustomInput>
       </div>
     </div>
