@@ -44,4 +44,44 @@
       }
     }
   }
+  .ulBox {
+    min-height: 3rem;
+    background-color: #fff;
+    margin-top: 0.5rem;
+    border-radius: 1.2rem;
+    text-align: left;
+    overflow: hidden;
+
+    .liBox {
+      width: 100%;
+      box-sizing: border-box;
+
+      li {
+        padding: 1rem 0;
+        padding-left: 2.4rem;
+        cursor: pointer;
+        outline: none;
+
+        span {
+          padding-left: 1rem;
+        }
+
+        &:hover,
+        &:focus {
+          background-color: #f3f3f3;
+        }
+      }
+
+      p {
+        font-size: 0.9rem;
+        padding: 1rem 2rem;
+        color: #666;
+      }
+    }
+  }
+  .textContent {
+    font-size: 0.9rem;
+    padding: 1rem 2rem;
+    color: #666;
+  }
 }

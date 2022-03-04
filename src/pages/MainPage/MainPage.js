@@ -20,7 +20,7 @@ const MainPage = () => {
         dispatch(searchResultRequest(e.target.value));
       }
     }, 400),
-    [value],
+    [value]
   );
 
   useEffect(() => {
