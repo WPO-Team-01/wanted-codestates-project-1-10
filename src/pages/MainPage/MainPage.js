@@ -21,13 +21,13 @@ const MainPage = () => {
 
   useEffect(() => {
     // 만료시간 지난 캐시 삭제
-    for (let i = 0; i < localStorage.length; i++) {
-      // console.log(i);
-      const localStorageElem = JSON.parse(
-        localStorage.getItem(localStorage.key(i)),
-      );
-      if (localStorageElem.expireTime <= Date.now()) {
-        localStorage.removeItem(localStorage.key(i));
+    for (let elem in localStorage) {
+      const localStorageElem = JSON.parse(localStorage.getItem(elem));
+      if (
+        localStorageElem?.expireTime &&
+        localStorageElem?.expireTime <= Date.now()
+      ) {
+        localStorage.removeItem(elem);
       }
     }
   }, []);

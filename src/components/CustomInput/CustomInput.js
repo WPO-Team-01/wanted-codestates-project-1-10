@@ -7,7 +7,7 @@ import { complete } from "../../store/resultSlice";
 
 const { inputBox, inputContent, inputText, buttonBox } = styles;
 
-const ONE_MINUTE = 1000 * 60 * 60;
+const ONE_MINUTE = 1000 * 60;
 
 const CustomInput = ({ placeholder, value, disable }) => {
   const resultLists = useSelector((state) => state.result.value);
@@ -22,9 +22,8 @@ const CustomInput = ({ placeholder, value, disable }) => {
       if (checkCache) {
         dispatch(complete(checkCache));
       } else {
-        console.log("ggggggggg");
         api.get(searchInput).then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
 
           const object = {
             data: response.data,
