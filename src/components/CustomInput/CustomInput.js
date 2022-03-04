@@ -31,7 +31,6 @@ const CustomInput = ({
   const dispatch = useDispatch();
   const resultLists = useSelector((state) => state.resultSlice.data);
 
-
   // eslint-disable-next-line
   const onChange = useCallback(
     debounce((e) => {
@@ -41,7 +40,7 @@ const CustomInput = ({
         dispatch(searchResultRequest(e.target.value));
       }
     }, 400),
-    [value],
+    [value]
   );
 
   const ARROW_DOWN = "ArrowDown";
@@ -131,17 +130,19 @@ const CustomInput = ({
         <div className={classNames(ulBox)}>
           <ul className={classNames(liBox)} ref={ulRef}>
             <p>추천 검색어</p>
-            {list.map((item, index) => (
-              <li
-                key={index}
-                ref={(el) => (liRefs.current[index] = el)}
-                tabIndex="0"
-                onKeyDown={(e) => onListKeyDown(e, index)}
-              >
-                🔍
-                <span>{item.name}</span>
-              </li>
-            ))}
+            {list
+              .map((item, index) => (
+                <li
+                  key={index}
+                  ref={(el) => (liRefs.current[index] = el)}
+                  tabIndex="0"
+                  onKeyDown={(e) => onListKeyDown(e, index)}
+                >
+                  🔍
+                  <span>{item.name}</span>
+                </li>
+              ))
+              .slice(0, 7)}
           </ul>
         </div>
       )}
