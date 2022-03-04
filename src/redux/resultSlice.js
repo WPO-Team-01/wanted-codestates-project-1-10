@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../axios";
 
-const ONE_MINUTE = 1000 * 90;
+const ONE_MINUTE = 1000 * 60;
 
 export const searchResultRequest = createAsyncThunk(
   "request",
