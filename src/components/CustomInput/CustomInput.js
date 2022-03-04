@@ -31,7 +31,6 @@ const CustomInput = ({
   const dispatch = useDispatch();
   const resultLists = useSelector((state) => state.resultSlice.data);
 
-  console.log(resultLists);
 
   // eslint-disable-next-line
   const onChange = useCallback(
@@ -45,7 +44,6 @@ const CustomInput = ({
     [value],
   );
 
-  console.log(resultLists);
   const ARROW_DOWN = "ArrowDown";
   const ARROW_UP = "ArrowUp";
   const ESCAPE = "Escape";
@@ -55,7 +53,6 @@ const CustomInput = ({
       if (e.keyCode === 229) {
         return;
       }
-      console.log(e.target.value, e.isComposing);
       //모달 열기
       setOpen(true);
       const first = liRefs.current[0];
@@ -76,12 +73,10 @@ const CustomInput = ({
     const prev = liRefs.current[index - 1];
     const first = liRefs.current[0];
     const last = liRefs.current[liRefs.current.length - 1];
-    console.log(e, index, liRefs);
     if (e.key === ARROW_DOWN) {
       e.preventDefault();
       if (next) {
         next.focus();
-        console.log(next);
       } else {
         //다음 요소 없으면 처음으로
         first && first.focus();
@@ -111,10 +106,7 @@ const CustomInput = ({
       setOpen(false);
       return;
     }
-    const newList = resultLists.filter(
-      (item) => item.name.toLowerCase().indexOf(keyword.toLowerCase()) >= 0,
-    );
-    setList(newList);
+    setList(resultLists);
   }, [keyword, resultLists]);
 
   return (

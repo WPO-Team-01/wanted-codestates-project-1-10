@@ -20,7 +20,7 @@ export const searchResultRequest = createAsyncThunk(
 
       return JSON.stringify(object);
     }
-  },
+  }
 );
 
 export const resultSlice = createSlice({
@@ -29,9 +29,7 @@ export const resultSlice = createSlice({
   reducers: {},
   extraReducers: {
     [searchResultRequest.fulfilled]: (state, { payload }) => {
-      if (typeof payload === "string") {
-        state.data = JSON.parse(payload).data;
-      }
+      state.data = JSON.parse(payload).data;
     },
   },
 });
