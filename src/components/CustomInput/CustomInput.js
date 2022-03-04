@@ -1,10 +1,42 @@
 import React from "react";
 import classNames from "classnames";
 import styles from "./CustomInput.module.scss";
+import { api } from "../../axios";
+import { useSelector, useDispatch } from "react-redux";
+import { complete } from "../../store/resultSlice";
 
 const { inputBox, inputContent, inputText, buttonBox } = styles;
 
-const CustomInput = ({ placeholder, onChange, disable, onClick }) => {
+const ONE_MINUTE = 1000 * 60 * 60;
+
+const CustomInput = ({ placeholder, value, disable }) => {
+  const resultLists = useSelector((state) => state.result.value);
+  const dispatch = useDispatch();
+
+  const handleInputChange = (e) => {
+    const searchInput = e.target.value;
+
+    if (searchInput) {
+      const checkCache = localStorage.getItem(searchInput);
+
+      if (checkCache) {
+        dispatch(complete(checkCache));
+      } else {
+        console.log("ggggggggg");
+        api.get(searchInput).then((response) => {
+          console.log(response.data);
+
+          const object = {
+            data: response.data,
+            expireTime: new Date().getTime() + ONE_MINUTE,
+          };
+
+          localStorage.setItem(searchInput, JSON.stringify(object));
+        });
+      }
+    }
+  };
+
   return (
     <div className={classNames(inputBox)}>
       <div className={classNames(inputContent)}>
@@ -13,12 +45,13 @@ const CustomInput = ({ placeholder, onChange, disable, onClick }) => {
           <input
             type="text"
             placeholder={placeholder}
-            onChange={onChange}
+            onChange={handleInputChange}
+            value={value}
             disabled={disable}
           />
         </div>
         <div className={classNames(buttonBox)}>
-          <button onClick={onClick}>검색</button>
+          <button>검색</button>
         </div>
       </div>
     </div>

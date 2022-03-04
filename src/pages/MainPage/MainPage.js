@@ -10,29 +10,27 @@ const { container, title, inputBox } = styles;
 
 const MainPage = () => {
   const [value, setValue] = useState("");
-  const [skip, setSkip] = useState(true);
-  const { data } = useGetContentsQuery(value, { skip });
-
-  useEffect(() => {
-    if (!value) {
-      setSkip(true);
-    }
-  }, [value]);
 
   // eslint-disable-next-line
   const handleChange = useCallback(
     debounce((e) => {
       setValue(e.target.value);
-      setSkip(false);
     }, 400),
     [value],
   );
 
-  const handleClickSearch = () => {
-    if (!value) {
-      alert("검색어를 입력해 주세요!");
+  useEffect(() => {
+    // 만료시간 지난 캐시 삭제
+    for (let i = 0; i < localStorage.length; i++) {
+      // console.log(i);
+      const localStorageElem = JSON.parse(
+        localStorage.getItem(localStorage.key(i)),
+      );
+      if (localStorageElem.expireTime <= Date.now()) {
+        localStorage.removeItem(localStorage.key(i));
+      }
     }
-  };
+  }, []);
 
   return (
     <div className={classNames(container)}>
@@ -45,7 +43,6 @@ const MainPage = () => {
         <CustomInput
           placeholder="질환명을 입력해 주세요."
           onChange={handleChange}
-          onClick={handleClickSearch}
         ></CustomInput>
       </div>
     </div>

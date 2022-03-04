@@ -1,14 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { ContentsApi } from "./query/ContentsApi";
+import resultReducer from "./resultSlice";
 
-export const store = configureStore({
+export default configureStore({
   reducer: {
-    [ContentsApi.reducerPath]: ContentsApi.reducer,
+    result: resultReducer,
   },
-  devTools: true,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(ContentsApi.middleware),
 });
-
-setupListeners(store.dispatch);
