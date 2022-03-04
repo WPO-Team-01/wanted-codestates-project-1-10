@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
 import classNames from "classnames";
+import { debounce } from "lodash";
 import styles from "./MainPage.module.scss";
 import { CustomInput } from "../../components";
-import { debounce, set } from "lodash";
-import { useGetContentsQuery } from "../../store/query/ContentsApi";
-import { useDispatch } from "react-redux";
+import { searchResultRequest } from "../../redux/resultSlice";
 
 const { container, title, inputBox } = styles;
 
