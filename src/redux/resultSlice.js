@@ -20,30 +20,20 @@ export const searchResultRequest = createAsyncThunk(
 
       return object;
     }
-  }
+  },
 );
 
 export const resultSlice = createSlice({
   name: "result",
-  initialState: [],
+  initialState: { data: [] },
   reducers: {},
   extraReducers: {
-    [searchResultRequest.fulfilled]: (state, { payload }) => payload,
+    [searchResultRequest.fulfilled]: (state, { payload }) => {
+      if (typeof payload === "string") {
+        state.data = JSON.parse(payload).data;
+      }
+    },
   },
 });
 
-// export const resultSlice = createSlice({
-//   name: "result",
-//   initialState: { value: [] },
-//   reducers: {
-//     complete: (state, action) => {
-//       state.value = action.payload;
-//     },
-//   },
-//   extraReducers: {
-//     [searchResultRequest.fulfilled]: (state, { payload }) => [...payload],
-//   },
-// });
-
-// export const { complete } = resultSlice.actions;
 export default resultSlice.reducer;

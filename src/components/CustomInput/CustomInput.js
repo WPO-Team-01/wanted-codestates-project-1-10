@@ -1,7 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import classNames from "classnames";
 import styles from "./CustomInput.module.scss";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { searchResultRequest } from "../../redux/resultSlice";
+import { debounce } from "lodash";
 
 const {
   inputBox,
@@ -25,13 +28,23 @@ const CustomInput = ({
   const [list, setList] = useState([]);
   const [keyword, setKeyword] = useState();
   const [open, setOpen] = useState();
+  const dispatch = useDispatch();
+  const resultLists = useSelector((state) => state.resultSlice.data);
 
-  const onChange = (e) => {
-    setKeyword(e.target.value);
-    setOpen(true);
-  };
+  console.log(resultLists);
 
-  const resultLists = useSelector((state) => state.resultSlice);
+  // eslint-disable-next-line
+  const onChange = useCallback(
+    debounce((e) => {
+      setKeyword(e.target.value);
+      setOpen(true);
+      if (e.target.value) {
+        dispatch(searchResultRequest(e.target.value));
+      }
+    }, 400),
+    [value],
+  );
+
   console.log(resultLists);
   const ARROW_DOWN = "ArrowDown";
   const ARROW_UP = "ArrowUp";
@@ -99,10 +112,10 @@ const CustomInput = ({
       return;
     }
     const newList = resultLists.filter(
-      (item) => item.name.toLowerCase().indexOf(keyword.toLowerCase()) >= 0
+      (item) => item.name.toLowerCase().indexOf(keyword.toLowerCase()) >= 0,
     );
     setList(newList);
-  }, [keyword]);
+  }, [keyword, resultLists]);
 
   return (
     <div className={classNames(inputBox)}>
@@ -113,7 +126,6 @@ const CustomInput = ({
             type="text"
             placeholder={placeholder}
             onChange={onChange}
-            value={value}
             disabled={disable}
             ref={inputRef}
             onKeyDown={onInputKeyDown}
